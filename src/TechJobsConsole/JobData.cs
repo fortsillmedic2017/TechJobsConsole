@@ -47,9 +47,9 @@ namespace TechJobsConsole
 
             foreach (Dictionary<string, string> row in AllJobs)
             {
-                string aValue = row[column];
+                string aValue = row[column].ToLower();  //Made ToLower() so case insensitive
 
-                if (aValue.Contains(value))
+                if (aValue.Contains(value.ToLower()))  //Made ToLower() so case insensitive
                 {
                     jobs.Add(row);
                 }
@@ -138,5 +138,29 @@ namespace TechJobsConsole
 
             return rowValues.ToArray();
         }
+
+        //Method to search if search by all is choosen and enter
+        public static List<Dictionary<string, string>>FindByValue(string searchTerm)
+        {
+          // load data, if not already loaded
+            LoadData();
+
+          //Creating a new list of dictonaries to add new job 
+            List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
+
+            foreach (Dictionary<string,string>job in AllJobs)
+            {
+                foreach(KeyValuePair<string,string> j in job)
+                { //made everything to lower to make case sensetive
+                    if (j.Value.ToLower().Contains(searchTerm.ToLower()))
+                      {
+                        jobs.Add(job);
+                      }
+                }
+            }
+
+            return jobs;
+        }
+
     }
 }
